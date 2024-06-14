@@ -5,29 +5,33 @@ import 'bloc/text_field_event.dart';
 import 'bloc/text_field_state.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider(
         create: (context) => TextFieldBloc(),
-        child: TextFieldPage(),
+        child: const TextFieldPage(),
       ),
     );
   }
 }
 
 class TextFieldPage extends StatelessWidget {
+  const TextFieldPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final TextFieldBloc textFieldBloc = BlocProvider.of<TextFieldBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('BLoC TextField Example'),
+        title: const Text('BLoC TextField Example'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -57,7 +61,7 @@ class TextFieldPage extends StatelessWidget {
                         hintText: 'Enter your text here...',
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text('Text: $displayText'),
                   ],
                 );
