@@ -30,7 +30,7 @@ class TextFieldPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            CustomText((text) {
+            CustomText('start',(text) {
               debugPrint('callback ->[$text]');
             }),
             // CustomTextField((text) {

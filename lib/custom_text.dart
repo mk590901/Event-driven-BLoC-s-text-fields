@@ -14,15 +14,18 @@ class CustomText extends StatelessWidget {
 
   late TextBloc textFieldBloc;
   final VoidCallbackParameter? callback;
+  final String initText;
 
-  CustomText(this.callback, {super.key});
+  CustomText(this.initText, this.callback, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
         textFieldBloc = TextBloc(TextState(TextStates.idle));
-        textFieldBloc.add(Changed('init'));
+        if (initText.isNotEmpty) {
+          textFieldBloc.add(Changed(initText));
+        }
         return textFieldBloc;
       },
       child: BlocBuilder<TextBloc, TextState>(
