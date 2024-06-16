@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'custom_text.dart';
 import 'custom_text_field.dart';
 
 void main() {
@@ -29,14 +30,16 @@ class TextFieldPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            //CustomTextField(),
-            CustomTextField((text) {
-              debugPrint('callback 1->[$text]');
+            CustomText((text) {
+              debugPrint('callback ->[$text]');
             }),
-
-            CustomTextField((text) {
-              debugPrint('callback 2->[$text]');
-            }),
+            // CustomTextField((text) {
+            //   debugPrint('callback 1->[$text]');
+            // }),
+            //
+            // CustomTextField((text) {
+            //   debugPrint('callback 2->[$text]');
+            // }),
           ],
         ),
       ),
