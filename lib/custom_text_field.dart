@@ -17,15 +17,13 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      //create: (context) => TextFieldBloc(),
       create: (context) {
         textFieldBloc = TextFieldBloc();
+        textFieldBloc.add(TextChanged('init'));
         return textFieldBloc;
       },
       child: BlocBuilder<TextFieldBloc, TextFieldState>(
         builder: (context, state) {
-          //final textFieldBloc = BlocProvider.of<TextFieldBloc>(context);
-
           if (state is TextFieldChanged) {
             _controller.value = _controller.value.copyWith(
               text: state.text,
