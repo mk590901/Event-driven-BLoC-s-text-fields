@@ -30,17 +30,21 @@ class CustomText extends StatelessWidget {
       },
       child: BlocBuilder<TextBloc, TextState>(
         builder: (context, state) {
-          if (state.state() == TextStates.changed) {
+//          if (state.state() == TextStates.changed) {
+          //if (state.state() == TextStates.idle) {
             _controller.value = _controller.value.copyWith(
               text: state.data(),
-              selection: TextSelection.collapsed(offset: (state.data() as String).length),
+//              selection: TextSelection.collapsed(offset: (state.data() as String).length),
+              selection: TextSelection.collapsed(offset: state.data() != null ? (state.data() as String).length : 0),
+
             );
-          }
+          //}
 
           return TextField(
             controller: _controller,
             focusNode: _focusNode,
             maxLines: null,  // Makes the TextField multiline
+            enabled: (state.state() == TextStates.idle),
             onChanged: (text) {
               // Example of formatting: capitalize every letter
               String formattedText = text.toUpperCase();
@@ -58,5 +62,31 @@ class CustomText extends StatelessWidget {
         },
       ),
     );
+  }
+
+  bool isEnable() {
+    bool enable = false;
+    try {
+      enable = (textFieldBloc.state.state() == TextStates.idle);
+    } catch (exception) {
+      debugPrint("******* enable error *******");
+    }
+    return enable;
+  }
+
+  void enable() {
+    try {
+      textFieldBloc.add(Enable());
+    } catch (exception) {
+      debugPrint("******* enable error *******");
+    }
+  }
+
+  void disable() {
+    try {
+      textFieldBloc.add(Disable());
+    } catch (exception) {
+      debugPrint("******* disable error *******");
+    }
   }
 }

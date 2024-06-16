@@ -11,15 +11,27 @@ class TextStateMachine extends BasicStateMachine {
 
   @override
   void create() {
-    states_[TextState.state_(TextStates.idle)] = State([
-        Trans(Submitted(),  TextState.state_(TextStates.idle),    OnSubmitted()),
-        Trans(Changed(),    TextState.state_(TextStates.changed), OnChanged())
-        ]);
 
-    states_[TextState.state_(TextStates.changed)] = State([
-        Trans(Submitted(),  TextState.state_(TextStates.idle),    OnSubmitted()),
-        Trans(Changed(),    TextState.state_(TextStates.changed), OnChanged())
+    states_[TextState.state_(TextStates.idle)] = State([
+      Trans(Submitted(),  TextState.state_(TextStates.idle),    OnSubmitted()),
+      Trans(Changed(),    TextState.state_(TextStates.idle),    OnChanged()),
+      Trans(Disable(),    TextState.state_(TextStates.disable), OnDisable())
     ]);
+
+    states_[TextState.state_(TextStates.disable)] = State([
+      Trans(Enable(),     TextState.state_(TextStates.idle),    OnEnable())
+    ]);
+
+
+    // states_[TextState.state_(TextStates.idle)] = State([
+    //     Trans(Submitted(),  TextState.state_(TextStates.idle),    OnSubmitted()),
+    //     Trans(Changed(),    TextState.state_(TextStates.changed), OnChanged())
+    //     ]);
+    //
+    // states_[TextState.state_(TextStates.changed)] = State([
+    //     Trans(Submitted(),  TextState.state_(TextStates.idle),    OnSubmitted()),
+    //     Trans(Changed(),    TextState.state_(TextStates.changed), OnChanged())
+    // ]);
 
   }
 

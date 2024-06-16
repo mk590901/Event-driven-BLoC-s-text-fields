@@ -22,6 +22,14 @@ class TextFieldPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    CustomText text = CustomText('start',(text) {
+      debugPrint('callback ->[$text]');
+    });
+
+
+
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('BLoC Custom TextField Example'),
@@ -30,9 +38,29 @@ class TextFieldPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            CustomText('start',(text) {
-              debugPrint('callback ->[$text]');
-            }),
+            text,
+            // CustomText('start',(text) {
+            //   debugPrint('callback ->[$text]');
+            // }),
+
+            ElevatedButton(
+              onPressed: () {
+                // if (state is TextFieldChanged) {
+                //   textFieldBloc.add(ToggleEnabled(!state.isEnabled));
+                // }
+                if (text.isEnable()) {
+                  text.disable();
+                }
+                else {
+                  text.enable();
+                }
+              },
+              child: Text(text.isEnable() ? 'Disable' : 'Enable'),
+              //child: Text('Disable/Enable'),
+            ),
+
+
+
             // CustomTextField((text) {
             //   debugPrint('callback 1->[$text]');
             // }),
