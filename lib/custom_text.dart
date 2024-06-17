@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/text_field_bloc.dart';
-import 'bloc/text_field_event.dart';
-import 'bloc/text_field_state.dart';
 import 'callback_fun_type.dart';
 import 'events/text_events.dart';
 import 'state_machines/text_bloc.dart';
@@ -13,10 +10,12 @@ class CustomText extends StatelessWidget {
   final FocusNode _focusNode = FocusNode();
 
   late TextBloc textFieldBloc;
-  final VoidCallbackParameter? callback;
+
+  final VoidCallbackParameter? callbackSubmitted;
+  final VoidCallbackParameter? callbackChanged;
   final String initText;
 
-  CustomText(this.initText, this.callback, {super.key});
+  CustomText(this.initText, this.callbackChanged, this.callbackSubmitted, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +29,10 @@ class CustomText extends StatelessWidget {
       },
       child: BlocBuilder<TextBloc, TextState>(
         builder: (context, state) {
-//          if (state.state() == TextStates.changed) {
-          //if (state.state() == TextStates.idle) {
             _controller.value = _controller.value.copyWith(
               text: state.data(),
-//              selection: TextSelection.collapsed(offset: (state.data() as String).length),
               selection: TextSelection.collapsed(offset: state.data() != null ? (state.data() as String).length : 0),
-
             );
-          //}
 
           return TextField(
             controller: _controller,
@@ -49,10 +43,11 @@ class CustomText extends StatelessWidget {
               // Example of formatting: capitalize every letter
               String formattedText = text.toUpperCase();
               textFieldBloc.add(Changed(formattedText));
-              callback?.call(formattedText);
+              callbackChanged?.call(formattedText);
             },
             onSubmitted: (text) {
               textFieldBloc.add(Submitted(text));
+              callbackSubmitted?.call(text);
             },
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
@@ -64,7 +59,7 @@ class CustomText extends StatelessWidget {
     );
   }
 
-  bool isEnable() {
+  bool isEnabled() {
     bool enable = false;
     try {
       enable = (textFieldBloc.state.state() == TextStates.idle);
@@ -89,4 +84,15 @@ class CustomText extends StatelessWidget {
       debugPrint("******* disable error *******");
     }
   }
+
+  String? text() {
+    String? result;
+    try {
+      result = textFieldBloc.state.data();
+    } catch (exception) {
+      debugPrint("******* disable error *******");
+    }
+    return result;
+  }
+
 }

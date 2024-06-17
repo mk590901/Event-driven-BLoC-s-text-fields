@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'custom_text.dart';
-import 'custom_text_field.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,12 +22,21 @@ class TextFieldPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    CustomText text = CustomText('start',(text) {
-      debugPrint('callback ->[$text]');
-    });
+    CustomText text = CustomText('start',(text){
+      debugPrint('main.callbackChanged ->[$text]');
+    }, (text) {});
 
-
-
+    ElevatedButton evaluatedButton = ElevatedButton(
+      onPressed: () {
+        if (text.isEnabled()) {
+          text.disable();
+        }
+        else {
+          text.enable();
+        }
+      },
+      child: Text(text.isEnabled() ? 'Disable' : 'Enable'),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -39,35 +47,7 @@ class TextFieldPage extends StatelessWidget {
         child: Column(
           children: [
             text,
-            // CustomText('start',(text) {
-            //   debugPrint('callback ->[$text]');
-            // }),
-
-            ElevatedButton(
-              onPressed: () {
-                // if (state is TextFieldChanged) {
-                //   textFieldBloc.add(ToggleEnabled(!state.isEnabled));
-                // }
-                if (text.isEnable()) {
-                  text.disable();
-                }
-                else {
-                  text.enable();
-                }
-              },
-              child: Text(text.isEnable() ? 'Disable' : 'Enable'),
-              //child: Text('Disable/Enable'),
-            ),
-
-
-
-            // CustomTextField((text) {
-            //   debugPrint('callback 1->[$text]');
-            // }),
-            //
-            // CustomTextField((text) {
-            //   debugPrint('callback 2->[$text]');
-            // }),
+            evaluatedButton,
           ],
         ),
       ),
