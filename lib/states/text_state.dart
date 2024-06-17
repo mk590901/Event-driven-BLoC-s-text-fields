@@ -1,4 +1,4 @@
-enum TextStates { idle, changed, disable }
+enum TextStates { ready, disabled }
 
 class TextState {
 

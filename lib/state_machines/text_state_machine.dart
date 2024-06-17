@@ -12,14 +12,14 @@ class TextStateMachine extends BasicStateMachine {
   @override
   void create() {
 
-    states_[TextState.state_(TextStates.idle)] = State([
-      Trans(Submitted(),  TextState.state_(TextStates.idle),    OnSubmitted()),
-      Trans(Changed(),    TextState.state_(TextStates.idle),    OnChanged()),
-      Trans(Disable(),    TextState.state_(TextStates.disable), OnDisable())
+    states_[TextState.state_(TextStates.ready)] = State([
+      Trans(Submitted(),  TextState.state_(TextStates.ready),    OnSubmitted()),
+      Trans(Changed(),    TextState.state_(TextStates.ready),    OnChanged()),
+      Trans(Disable(),    TextState.state_(TextStates.disabled), OnDisable())
     ]);
 
-    states_[TextState.state_(TextStates.disable)] = State([
-      Trans(Enable(),     TextState.state_(TextStates.idle),    OnEnable())
+    states_[TextState.state_(TextStates.disabled)] = State([
+      Trans(Enable(),     TextState.state_(TextStates.ready),    OnEnable())
     ]);
 
 

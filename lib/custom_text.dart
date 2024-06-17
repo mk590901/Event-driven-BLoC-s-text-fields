@@ -14,15 +14,15 @@ class CustomText extends StatelessWidget {
   final VoidCallbackParameter? callbackSubmitted;
   final VoidCallbackParameter? onChangedAction;
   final String initText;
-  final String hint;
+  final String hintText;
 
-  CustomText({super.key, this.initText = '', this.hint = '', this.callbackSubmitted, this.onChangedAction});
+  CustomText({super.key, this.initText = '', this.hintText = '', this.callbackSubmitted, this.onChangedAction});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        textBloc = TextBloc(TextState(TextStates.idle));
+        textBloc = TextBloc(TextState(TextStates.ready));
         if (initText.isNotEmpty) {
           textBloc.add(Changed(initText.toUpperCase()));
         }
@@ -39,7 +39,7 @@ class CustomText extends StatelessWidget {
             controller: _controller,
             focusNode: _focusNode,
             maxLines: null,  // Makes the TextField multiline
-            enabled: (state.state() == TextStates.idle),
+            enabled: (state.state() == TextStates.ready),
             onChanged: (text) {
               // Example of formatting: capitalize every letter
               String formattedText = text.toUpperCase();
@@ -53,7 +53,7 @@ class CustomText extends StatelessWidget {
             },
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              hintText: hint,
+              hintText: hintText,
             ),
           );
         },
@@ -64,7 +64,7 @@ class CustomText extends StatelessWidget {
   bool isEnabled() {
     bool enable = false;
     try {
-      enable = (textBloc.state.state() == TextStates.idle);
+      enable = (textBloc.state.state() == TextStates.ready);
     } catch (exception) {
       debugPrint("******* isEnabled error: ${exception.toString()} *******");
     }
