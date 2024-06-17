@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -19,8 +18,8 @@ class FlatTextRoundedButton extends StatelessWidget implements IClick {
   final Color textColor;
   final Color textPressedColor;
   final Color textDisabledColor;
-  final String text;
-  final String textPressed;
+  late  String text;
+  //final String textPressed;
   final String textDisabled;
   final double width;
   final double height;
@@ -51,7 +50,7 @@ class FlatTextRoundedButton extends StatelessWidget implements IClick {
     this.canvasPressedColor = Colors.transparent,
     this.canvasDisabledColor = Colors.black12,
     this.text = "text",
-    this.textPressed = "pressed",
+    //this.textPressed = text,
     this.textDisabled = "disabled",
     this.textColor = Colors.black,
     this.textPressedColor = Colors.black,
@@ -89,6 +88,15 @@ class FlatTextRoundedButton extends StatelessWidget implements IClick {
       switchBloc.add(Disable());
     } catch (exception) {
       debugPrint("******* disable error *******");
+    }
+  }
+
+  void changeText(final String text) {
+    try {
+      this.text = text;
+      switchBloc.add(ChangeText());
+    } catch (exception) {
+      debugPrint("******* change error *******");
     }
   }
 
@@ -145,7 +153,7 @@ class FlatTextRoundedButton extends StatelessWidget implements IClick {
         result = text;
         break;
       case ButtonStates.pressed:
-        result = textPressed;
+        result = text; //textPressed;
         break;
       case ButtonStates.disabled:
         result = textDisabled;

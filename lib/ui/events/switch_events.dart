@@ -104,3 +104,21 @@ class Disable<T> extends Event<T> {
     return this;
   }
 }
+
+class ChangeText<T> extends Event<T> {
+  T? _data;
+
+  ChangeText([this._data]);
+
+  @override
+  T? getData() {
+    return _data;
+  }
+
+  @override
+  ChangeText<T> setData([T? data]) {
+    _data = data;
+    return this;
+  }
+}
+

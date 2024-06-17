@@ -12,8 +12,9 @@ class ButtonStateMachine extends BasicStateMachine {
   @override
   void create() {
     states_[ButtonState.state_(ButtonStates.ready)] = State([
-      Trans(Disable(),  ButtonState.state_(ButtonStates.disabled), OnDisable()),
-      Trans(Down(),     ButtonState.state_(ButtonStates.pressed), OnPress())
+      Trans(Disable(),  ButtonState.state_(ButtonStates.disabled),  OnDisable()),
+      Trans(Down(),     ButtonState.state_(ButtonStates.pressed),   OnPress()),
+      Trans(ChangeText(),   ButtonState.state_(ButtonStates.ready),     OnNothing())
     ]);
 
     states_[ButtonState.state_(ButtonStates.pressed)] = State([

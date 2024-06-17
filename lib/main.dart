@@ -26,10 +26,11 @@ class TextFieldPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     CustomText text = CustomText(
-        initText: 'start',
+        //initText: 'start',
         hintText: 'Enter your text here...',
-        labelText: 'Account Name',
-        capitalization: TextCapitalization.words,
+        labelText: 'Text',
+        textColorEnabled: Colors.blue,
+        capitalization: TextCapitalization.characters,
         onChangedAction: (text) {
           debugPrint('main.callbackChanged ->[$text]');
           if (text is String) {
@@ -47,29 +48,27 @@ class TextFieldPage extends StatelessWidget {
     textRoundedButton = FlatTextRoundedButton(
       width: 48,
       height: 14,
-      canvasColor: Colors.blueAccent,
+      canvasColor: Colors.transparent,
       canvasDisabledColor: Colors.blueGrey,
       canvasPressedColor: Colors.indigo,
-      textColor: Colors.limeAccent,
+      textColor: Colors.blue,
       textDisabledColor: Colors.white70,
       textPressedColor: Colors.white,
-      text: 'Enable/Disable',
-      textPressed: 'Enable/Disable',
+      text: 'Disable',
       textDisabled: 'Out of order',
-      borderColor: Colors.limeAccent,
+      borderColor: Colors.blue,
       borderPressedColor: Colors.white30,
       borderDisabledColor: Colors.blueGrey,
       borderWidth: 0.5,
       borderRadius: 8,
-      onUpAction: () {
-        //purple.enable();
-        //blueRoundedAdvanced.click();
-      },
       onDownAction: () {
         if (text.isEnabled()) {
           text.disable();
+          textRoundedButton.changeText('Enable');
         } else {
           text.enable();
+          textRoundedButton.changeText('Disable');
+
         }
       },
     );
