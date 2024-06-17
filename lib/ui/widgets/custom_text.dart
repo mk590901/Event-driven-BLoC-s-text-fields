@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'core/callback_fun_type.dart';
-import '../ui/events/text_events.dart';
-import '../ui/blocs/text_bloc.dart';
-import '../ui/states/text_state.dart';
+import '../../core/callback_fun_type.dart';
+import '../../../ui/events/text_events.dart';
+import '../../../ui/blocs/text_bloc.dart';
+import '../../../ui/states/text_state.dart';
 
 class CustomText extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();

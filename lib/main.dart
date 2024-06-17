@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'custom_text.dart';
+import 'ui/widgets/custom_text.dart';
 
 void main() {
   runApp(const MyApp());
