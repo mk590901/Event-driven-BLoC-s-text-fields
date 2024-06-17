@@ -23,8 +23,10 @@ class TextFieldPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     CustomText text = CustomText(
-        // initText: 'start',
-        // hint: 'Enter your text here...',
+        initText: 'start',
+        hintText: 'Enter your text here...',
+        labelText: 'Account Name',
+        capitalization: TextCapitalization.words,
         onChangedAction: (text)=> debugPrint('main.callbackChanged ->[$text]'),
 //        (text) {}
     );

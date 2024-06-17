@@ -15,8 +15,11 @@ class CustomText extends StatelessWidget {
   final VoidCallbackParameter? onChangedAction;
   final String initText;
   final String hintText;
+  final String labelText;
+  final TextCapitalization capitalization;
 
-  CustomText({super.key, this.initText = '', this.hintText = '', this.callbackSubmitted, this.onChangedAction});
+  CustomText({super.key, this.initText = '', this.hintText = '', this.labelText = '',
+    this.capitalization = TextCapitalization.none, this.callbackSubmitted, this.onChangedAction});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class CustomText extends StatelessWidget {
       create: (context) {
         textBloc = TextBloc(TextState(TextStates.ready));
         if (initText.isNotEmpty) {
-          textBloc.add(Changed(initText.toUpperCase()));
+          textBloc.add(Changed(initText));
         }
         return textBloc;
       },
@@ -38,22 +41,38 @@ class CustomText extends StatelessWidget {
           return TextField(
             controller: _controller,
             focusNode: _focusNode,
+            textCapitalization: capitalization,
             maxLines: null,  // Makes the TextField multiline
             enabled: (state.state() == TextStates.ready),
             onChanged: (text) {
-              // Example of formatting: capitalize every letter
-              String formattedText = text.toUpperCase();
-              textBloc.add(Changed(formattedText));
-              onChangedAction?.call(formattedText);
+              textBloc.add(Changed(text));
+              onChangedAction?.call(text);
             },
             onSubmitted: (text) {
-              String formattedText = text.toUpperCase();
-              textBloc.add(Submitted(formattedText));
-              callbackSubmitted?.call(formattedText);
+              textBloc.add(Submitted(text));
+              callbackSubmitted?.call(text);
             },
+            onEditingComplete: () { //  ???
+              debugPrint('Editing completed');
+            },
+            style: TextStyle(
+                color: state.state() == TextStates.disabled ? Colors.grey : Colors.blue),
             decoration: InputDecoration(
-              border: const OutlineInputBorder(),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue, width: 2.0),
+              ),
+              disabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 2.0),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue, width: 2.0),
+              ),
               hintText: hintText,
+              hintStyle: TextStyle(
+                  color: state.state() == TextStates.disabled ? Colors.grey : Colors.blue),
+              labelText: labelText,
+              labelStyle: TextStyle(
+                  color: state.state() == TextStates.disabled ? Colors.grey : Colors.blue),
             ),
           );
         },
