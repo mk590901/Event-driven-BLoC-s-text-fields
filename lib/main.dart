@@ -22,9 +22,12 @@ class TextFieldPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    CustomText text = CustomText('start',(text){
-      debugPrint('main.callbackChanged ->[$text]');
-    }, (text) {});
+    CustomText text = CustomText(
+        // initText: 'start',
+        // hint: 'Enter your text here...',
+        onChangedAction: (text)=> debugPrint('main.callbackChanged ->[$text]'),
+//        (text) {}
+    );
 
     ElevatedButton evaluatedButton = ElevatedButton(
       onPressed: () {

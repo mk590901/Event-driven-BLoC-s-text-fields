@@ -9,23 +9,24 @@ class CustomText extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
-  late TextBloc textFieldBloc;
+  late TextBloc textBloc;
 
   final VoidCallbackParameter? callbackSubmitted;
-  final VoidCallbackParameter? callbackChanged;
+  final VoidCallbackParameter? onChangedAction;
   final String initText;
+  final String hint;
 
-  CustomText(this.initText, this.callbackChanged, this.callbackSubmitted, {super.key});
+  CustomText({super.key, this.initText = '', this.hint = '', this.callbackSubmitted, this.onChangedAction});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        textFieldBloc = TextBloc(TextState(TextStates.idle));
+        textBloc = TextBloc(TextState(TextStates.idle));
         if (initText.isNotEmpty) {
-          textFieldBloc.add(Changed(initText.toUpperCase()));
+          textBloc.add(Changed(initText.toUpperCase()));
         }
-        return textFieldBloc;
+        return textBloc;
       },
       child: BlocBuilder<TextBloc, TextState>(
         builder: (context, state) {
@@ -42,17 +43,17 @@ class CustomText extends StatelessWidget {
             onChanged: (text) {
               // Example of formatting: capitalize every letter
               String formattedText = text.toUpperCase();
-              textFieldBloc.add(Changed(formattedText));
-              callbackChanged?.call(formattedText);
+              textBloc.add(Changed(formattedText));
+              onChangedAction?.call(formattedText);
             },
             onSubmitted: (text) {
               String formattedText = text.toUpperCase();
-              textFieldBloc.add(Submitted(formattedText));
+              textBloc.add(Submitted(formattedText));
               callbackSubmitted?.call(formattedText);
             },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter your text here...',
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              hintText: hint,
             ),
           );
         },
@@ -63,16 +64,16 @@ class CustomText extends StatelessWidget {
   bool isEnabled() {
     bool enable = false;
     try {
-      enable = (textFieldBloc.state.state() == TextStates.idle);
+      enable = (textBloc.state.state() == TextStates.idle);
     } catch (exception) {
-      debugPrint("******* enable error *******");
+      debugPrint("******* isEnabled error: ${exception.toString()} *******");
     }
     return enable;
   }
 
   void enable() {
     try {
-      textFieldBloc.add(Enable());
+      textBloc.add(Enable());
     } catch (exception) {
       debugPrint("******* enable error *******");
     }
@@ -80,7 +81,7 @@ class CustomText extends StatelessWidget {
 
   void disable() {
     try {
-      textFieldBloc.add(Disable());
+      textBloc.add(Disable());
     } catch (exception) {
       debugPrint("******* disable error *******");
     }
@@ -89,7 +90,7 @@ class CustomText extends StatelessWidget {
   String? text() {
     String? result;
     try {
-      result = textFieldBloc.state.data();
+      result = textBloc.state.data();
     } catch (exception) {
       debugPrint("******* disable error *******");
     }
