@@ -23,7 +23,7 @@ class CustomText extends StatelessWidget {
       create: (context) {
         textFieldBloc = TextBloc(TextState(TextStates.idle));
         if (initText.isNotEmpty) {
-          textFieldBloc.add(Changed(initText));
+          textFieldBloc.add(Changed(initText.toUpperCase()));
         }
         return textFieldBloc;
       },
@@ -46,8 +46,9 @@ class CustomText extends StatelessWidget {
               callbackChanged?.call(formattedText);
             },
             onSubmitted: (text) {
-              textFieldBloc.add(Submitted(text));
-              callbackSubmitted?.call(text);
+              String formattedText = text.toUpperCase();
+              textFieldBloc.add(Submitted(formattedText));
+              callbackSubmitted?.call(formattedText);
             },
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
