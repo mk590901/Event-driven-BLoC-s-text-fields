@@ -70,6 +70,14 @@ class OnDisable implements ITransitionMethod {
   }
 }
 
+class OnNothing implements ITransitionMethod {
+  @override
+  void execute([var hashMap]) {
+    print("@OnNothing $hashMap");
+  }
+}
+
+
 class OnEnable implements ITransitionMethod {
   @override
   void execute([var data]) {
