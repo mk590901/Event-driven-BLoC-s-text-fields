@@ -1,4 +1,4 @@
-import '../core/event.dart';
+import '../../core/event.dart';
 
 //  Button events
 class Submitted<T> extends Event<T> {

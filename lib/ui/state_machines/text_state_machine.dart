@@ -1,9 +1,9 @@
 import '../events/text_events.dart';
-import '../core/event.dart';
+import '../../core/event.dart';
 import '../states/text_state.dart';
-import '../core/basic_state_machine.dart';
-import '../core/state.dart';
-import '../core/trans.dart';
+import '../../core/basic_state_machine.dart';
+import '../../core/state.dart';
+import '../../core/trans.dart';
 import 'trans_methods.dart';
 
 class TextStateMachine extends BasicStateMachine {

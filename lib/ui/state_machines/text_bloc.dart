@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../events/text_events.dart';
-import '../core/event.dart';
-import '../core/basic_state_machine.dart';
-import '../state_machines/text_state_machine.dart';
+import '../../core/event.dart';
+import '../../core/basic_state_machine.dart';
+import 'text_state_machine.dart';
 import '../states/text_state.dart';
 
 class TextBloc extends Bloc<Event, TextState> {
