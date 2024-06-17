@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../events/text_events.dart';
-import '../events/event.dart';
-import '../state_machines/basic_state_machine.dart';
+import '../core/event.dart';
+import '../core/basic_state_machine.dart';
 import '../state_machines/text_state_machine.dart';
 import '../states/text_state.dart';
 

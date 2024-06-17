@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'callback_fun_type.dart';
+import 'core/callback_fun_type.dart';
 import 'events/text_events.dart';
 import 'state_machines/text_bloc.dart';
 import 'states/text_state.dart';
@@ -16,9 +16,12 @@ class CustomText extends StatelessWidget {
   final String initText;
   final String hintText;
   final String labelText;
+  final Color textColorDisabled;
+  final Color textColorEnabled;
   final TextCapitalization capitalization;
 
   CustomText({super.key, this.initText = '', this.hintText = '', this.labelText = '',
+    this.textColorEnabled = Colors.black, this.textColorDisabled = Colors.grey,
     this.capitalization = TextCapitalization.none, this.callbackSubmitted, this.onChangedAction});
 
   @override
@@ -56,23 +59,23 @@ class CustomText extends StatelessWidget {
               debugPrint('Editing completed');
             },
             style: TextStyle(
-                color: state.state() == TextStates.disabled ? Colors.grey : Colors.blue),
+                color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),
             decoration: InputDecoration(
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue, width: 2.0),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: textColorEnabled, width: 2.0),
               ),
-              disabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 2.0),
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: textColorDisabled, width: 2.0),
               ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue, width: 2.0),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: textColorEnabled, width: 2.0),
               ),
               hintText: hintText,
               hintStyle: TextStyle(
-                  color: state.state() == TextStates.disabled ? Colors.grey : Colors.blue),
+                  color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),
               labelText: labelText,
               labelStyle: TextStyle(
-                  color: state.state() == TextStates.disabled ? Colors.grey : Colors.blue),
+                  color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),
             ),
           );
         },

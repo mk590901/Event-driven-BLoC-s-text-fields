@@ -1,6 +1,6 @@
-import '../../state_machines/trans.dart';
-import '../../state_machines/transaction.dart';
-import '../events/event.dart';
+import 'trans.dart';
+import 'transaction.dart';
+import 'event.dart';
 
 class State {
   final Map<Type, Transaction> _transactions = <Type, Transaction>{};

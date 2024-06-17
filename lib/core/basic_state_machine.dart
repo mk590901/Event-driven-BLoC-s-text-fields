@@ -1,5 +1,4 @@
-import '../events/event.dart';
-import '../interfaces/i_sink.dart';
+import 'event.dart';
 import 'state.dart';
 import 'transaction.dart';
 
@@ -28,10 +27,8 @@ Failed to get transaction for [${getStateName(_currentState)}], event->${event}"
     }
     _currentState = transaction.state();
 
-    transaction.method()?.execute(
-        (event.getData() == null || event.getData() is! ISink)
-            ? event.getData()
-            : event.getData().uuid());
+    transaction.method()?.execute(event.getData());
+
     return _currentState;
   }
 

@@ -1,4 +1,4 @@
-import '../interfaces/i_transition_method.dart';
+import '../core/interfaces/i_transition_method.dart';
 
 class OnSubmitted implements ITransitionMethod {
   @override
