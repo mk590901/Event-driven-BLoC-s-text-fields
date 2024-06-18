@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ui/widgets/easy_text_field.dart';
 import 'ui/widgets/multiline_text_field.dart';
 import 'ui/widgets/flat_text_rounded_button.dart';
 
@@ -25,8 +26,7 @@ class TextFieldPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    MultilineTextField text = MultilineTextField(
-        //initText: 'start',
+    final MultilineTextField text = MultilineTextField(
         hintText: 'Enter your text here...',
         labelText: 'Text',
         textColorEnabled: Colors.blue,
@@ -68,8 +68,28 @@ class TextFieldPage extends StatelessWidget {
         } else {
           text.enable();
           textRoundedButton.changeText('Disable');
-
         }
+      },
+    );
+
+    final EasyTextField password = EasyTextField(
+      hintText: 'Enter password...',
+      obscureText: true,
+      textColorEnabled: Colors.blue,
+      capitalization: TextCapitalization.characters,
+      onChangedAction: (text) {
+        debugPrint('password.onChangedAction ->[$text]');
+        if (text is String) {
+          if ((text).isEmpty) {
+            textRoundedButton.disable();
+          }
+          else {
+            textRoundedButton.enable();
+          }
+        }
+      },
+      onSubmittedAction: (text) {
+        debugPrint('password.onSubmittedAction ->[$text]');
       },
     );
 
@@ -82,8 +102,10 @@ class TextFieldPage extends StatelessWidget {
         child: Column(
           children: [
             text,
-            const SizedBox(height: 32,),
+            const SizedBox(height: 24,),
             textRoundedButton,
+            const SizedBox(height: 32,),
+            password,
             //evaluatedButton,
           ],
         ),
