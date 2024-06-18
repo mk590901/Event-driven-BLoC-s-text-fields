@@ -4,11 +4,11 @@ import 'ui/widgets/multiline_text_field.dart';
 import 'ui/widgets/flat_text_rounded_button.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const CustomTextFieldsDemoApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CustomTextFieldsDemoApp extends StatelessWidget {
+  const CustomTextFieldsDemoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +133,16 @@ class TextFieldPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BLoC Custom TextField Example'),
+        title: Text('Custom Text Fields',
+            style: buildTitleTextStyle()),
+        leading: IconButton(
+          icon: const Icon(Icons.text_snippet_outlined, color: Colors.white),
+          // Icon widget
+          onPressed: () {
+            // Add your onPressed logic here
+          },
+        ),
+        backgroundColor: Colors.lightBlue,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -146,8 +155,18 @@ class TextFieldPage extends StatelessWidget {
               ),
               textRoundedButton,
               const SizedBox(
-                height: 32,
+                height: 16,
               ),
+
+              const Divider(
+                color: Colors.teal,
+                thickness: 2,
+              ),
+
+              const SizedBox(
+                height: 16,
+              ),
+
               account,
               const SizedBox(
                 height: 16,
@@ -190,5 +209,20 @@ class TextFieldPage extends StatelessWidget {
     } else {
       button.enable();
     }
+  }
+
+  TextStyle buildTitleTextStyle() {
+    return const TextStyle(
+      color: Colors.white,
+      fontSize: 18,
+      fontStyle: FontStyle.italic,
+      shadows: [
+        Shadow(
+          blurRadius: 8.0,
+          color: Colors.indigo,
+          offset: Offset(3.0, 3.0),
+        ),
+      ],
+    );
   }
 }
