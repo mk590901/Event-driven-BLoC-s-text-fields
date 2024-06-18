@@ -8,8 +8,6 @@ The collection of buttons and switches (https://github.com/mk590901/Event-driven
 
 ![text_field](https://github.com/mk590901/text_bloc/assets/125393245/4bd199ae-e379-4d8d-865b-8ee5210f56c9)
 
-https://github.com/mk590901/text_bloc/assets/125393245/4bd199ae-e379-4d8d-865b-8ee5210f56c9
-
 ## Movie
 
 https://github.com/mk590901/text_bloc/assets/125393245/a4c93540-f90b-4845-90d6-e05af8e77088
