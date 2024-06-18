@@ -93,7 +93,6 @@ class TextFieldPage extends StatelessWidget {
       capitalization: TextCapitalization.characters,
       onChangedAction: (text) {
         debugPrint('password.onChangedAction ->[$text]');
-        setupTextRoundedButton(text);
         setupRoundedButton(text.isNotEmpty, loginRoundedButton);
       },
       onSubmittedAction: (text) {
