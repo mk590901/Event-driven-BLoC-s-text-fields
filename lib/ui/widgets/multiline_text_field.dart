@@ -13,6 +13,7 @@ class MultilineTextField extends StatelessWidget {
 
   late TextBloc textBloc;
   late Timer? timer;
+  late String entity = '';
 
   final VoidCallbackParameter? onStartedAction;
   final VoidCallbackParameter? onChangedAction;
@@ -31,9 +32,16 @@ class MultilineTextField extends StatelessWidget {
     });
   }
 
-  MultilineTextField({super.key, this.initText = '', this.hintText = '', this.labelText = '',
-    this.textColorEnabled = Colors.black, this.textColorDisabled = Colors.grey,
-    this.capitalization = TextCapitalization.none, this.onStartedAction, this.onChangedAction});
+  MultilineTextField(
+      {super.key,
+      this.initText = '',
+      this.hintText = '',
+      this.labelText = '',
+      this.textColorEnabled = Colors.black,
+      this.textColorDisabled = Colors.grey,
+      this.capitalization = TextCapitalization.none,
+      this.onStartedAction,
+      this.onChangedAction});
 
   @override
   Widget build(BuildContext context) {
@@ -42,29 +50,36 @@ class MultilineTextField extends StatelessWidget {
         textBloc = TextBloc(TextState(TextStates.ready));
         if (initText.isNotEmpty) {
           textBloc.add(Changed(initText));
+          entity = initText;
         }
         startTimer(initText);
         return textBloc;
       },
       child: BlocBuilder<TextBloc, TextState>(
         builder: (context, state) {
-            _controller.value = _controller.value.copyWith(
-              text: state.data(),
-              selection: TextSelection.collapsed(offset: state.data() != null ? (state.data() as String).length : 0),
-            );
+          _controller.value = _controller.value.copyWith(
+            text: state.data(),
+            selection: TextSelection.collapsed(
+                offset:
+                    state.data() != null ? (state.data() as String).length : 0),
+          );
 
           return TextField(
             controller: _controller,
             focusNode: _focusNode,
             textCapitalization: capitalization,
-            maxLines: null,  // Makes the TextField multiline
+            maxLines: null,
+            // Makes the TextField multiline
             enabled: (state.state() == TextStates.ready),
             onChanged: (text) {
+              entity = text;
               textBloc.add(Changed(text));
               onChangedAction?.call(text);
             },
             style: TextStyle(
-                color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),
+                color: state.state() == TextStates.disabled
+                    ? textColorDisabled
+                    : textColorEnabled),
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: textColorEnabled, width: 2.0),
@@ -77,10 +92,14 @@ class MultilineTextField extends StatelessWidget {
               ),
               hintText: hintText,
               hintStyle: TextStyle(
-                  color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),
+                  color: state.state() == TextStates.disabled
+                      ? textColorDisabled
+                      : textColorEnabled),
               labelText: labelText,
               labelStyle: TextStyle(
-                  color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),
+                  color: state.state() == TextStates.disabled
+                      ? textColorDisabled
+                      : textColorEnabled),
             ),
           );
         },
@@ -114,14 +133,11 @@ class MultilineTextField extends StatelessWidget {
     }
   }
 
-  String? text() {
-    String? result;
-    try {
-      result = textBloc.state.data();
-    } catch (exception) {
-      debugPrint("******* disable error *******");
-    }
-    return result;
+  bool isNotEmpty() {
+    return entity.isNotEmpty;
   }
 
+  String? text() {
+    return entity;
+  }
 }

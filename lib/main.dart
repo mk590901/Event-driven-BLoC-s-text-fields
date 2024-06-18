@@ -25,20 +25,19 @@ class TextFieldPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final MultilineTextField multilineText = MultilineTextField(
-        hintText: 'Enter your text here...',
-        labelText: 'Text',
-        textColorEnabled: Colors.blue,
-        capitalization: TextCapitalization.characters,
-        onChangedAction: (text) {
-          debugPrint('main.onChangedAction ->[$text]');
-          setupTextRoundedButton(text);
-        },
-        onStartedAction: (text) {
-          debugPrint('main.callbackChanged ->[$text]');
-          setupTextRoundedButton(text);
-        },
+      hintText: 'Enter your text here...',
+      labelText: 'Text',
+      textColorEnabled: Colors.blue,
+      capitalization: TextCapitalization.characters,
+      onChangedAction: (text) {
+        debugPrint('main.onChangedAction ->[$text]');
+        setupTextRoundedButton(text);
+      },
+      onStartedAction: (text) {
+        debugPrint('main.callbackChanged ->[$text]');
+        setupTextRoundedButton(text);
+      },
     );
 
     textRoundedButton = FlatTextRoundedButton(
@@ -84,8 +83,7 @@ class TextFieldPage extends StatelessWidget {
       borderDisabledColor: Colors.blueGrey,
       borderWidth: 0.5,
       borderRadius: 8,
-      onDownAction: () {
-      },
+      onDownAction: () {},
     );
 
     final EasyTextField password = EasyTextField(
@@ -113,9 +111,11 @@ class TextFieldPage extends StatelessWidget {
       hintText: 'Enter account name...',
       textColorEnabled: Colors.black,
       onChangedAction: (text) {
-        debugPrint('account.onChangedAction ->[$text]');
+        debugPrint(
+            'account.onChangedAction ->[$text] ${text.isNotEmpty}, ${password.isNotEmpty()}');
         setupPassword(text, password);
-        setupRoundedButton(text.isNotEmpty && password.isNotEmpty(), loginRoundedButton);
+        setupRoundedButton(
+            text.isNotEmpty && password.isNotEmpty(), loginRoundedButton);
       },
       onSubmittedAction: (text) {
         debugPrint('account.onSubmittedAction ->[$text]');
@@ -126,7 +126,8 @@ class TextFieldPage extends StatelessWidget {
       onStartedAction: (text) {
         debugPrint('account.onStartedAction ->[$text]');
         setupPassword(text, password);
-        setupRoundedButton(text.isNotEmpty && password.isNotEmpty(), loginRoundedButton);
+        setupRoundedButton(
+            text.isNotEmpty && password.isNotEmpty(), loginRoundedButton);
       },
     );
 
@@ -135,24 +136,30 @@ class TextFieldPage extends StatelessWidget {
         title: const Text('BLoC Custom TextField Example'),
       ),
       body: SingleChildScrollView(
-
-      child:
-      Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            multilineText,
-            const SizedBox(height: 24,),
-            textRoundedButton,
-            const SizedBox(height: 32,),
-            account,
-            const SizedBox(height: 16,),
-            password,
-            const SizedBox(height: 16,),
-            loginRoundedButton,
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              multilineText,
+              const SizedBox(
+                height: 24,
+              ),
+              textRoundedButton,
+              const SizedBox(
+                height: 32,
+              ),
+              account,
+              const SizedBox(
+                height: 16,
+              ),
+              password,
+              const SizedBox(
+                height: 16,
+              ),
+              loginRoundedButton,
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -161,8 +168,7 @@ class TextFieldPage extends StatelessWidget {
     if (text is String) {
       if ((text).isEmpty) {
         password.disable();
-      }
-      else {
+      } else {
         password.enable();
       }
     }
@@ -172,19 +178,17 @@ class TextFieldPage extends StatelessWidget {
     if (text is String) {
       if ((text).isEmpty) {
         textRoundedButton.disable();
-      }
-      else {
+      } else {
         textRoundedButton.enable();
       }
     }
   }
 
   void setupRoundedButton(bool enable, FlatTextRoundedButton button) {
-       if (!enable) {
-        button.disable();
-      }
-      else {
-         button.enable();
-      }
+    if (!enable) {
+      button.disable();
+    } else {
+      button.enable();
+    }
   }
 }

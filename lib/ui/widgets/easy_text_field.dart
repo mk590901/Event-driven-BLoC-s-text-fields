@@ -13,6 +13,7 @@ class EasyTextField extends StatelessWidget {
 
   late TextBloc textBloc;
   late Timer? timer;
+  late String entity = '';
 
   final VoidCallbackParameter? onStartedAction;
   final VoidCallbackParameter? onSubmittedAction;
@@ -35,10 +36,18 @@ class EasyTextField extends StatelessWidget {
     });
   }
 
-  EasyTextField({super.key, this.initText = '', this.hintText = '',
-    this.textColorEnabled = Colors.black, this.textColorDisabled = Colors.grey,
-    this.capitalization = TextCapitalization.none, this.obscureText = false,
-    this.onStartedAction, this.onSubmittedAction, this.onChangedAction, this.onCompletedAction});
+  EasyTextField(
+      {super.key,
+      this.initText = '',
+      this.hintText = '',
+      this.textColorEnabled = Colors.black,
+      this.textColorDisabled = Colors.grey,
+      this.capitalization = TextCapitalization.none,
+      this.obscureText = false,
+      this.onStartedAction,
+      this.onSubmittedAction,
+      this.onChangedAction,
+      this.onCompletedAction});
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +56,19 @@ class EasyTextField extends StatelessWidget {
         textBloc = TextBloc(TextState(TextStates.ready));
         if (initText.isNotEmpty) {
           textBloc.add(Changed(initText));
+          entity = initText;
         }
         startTimer(initText);
         return textBloc;
       },
       child: BlocBuilder<TextBloc, TextState>(
         builder: (context, state) {
-            _controller.value = _controller.value.copyWith(
-              text: state.data(),
-              selection: TextSelection.collapsed(offset: state.data() != null ? (state.data() as String).length : 0),
-            );
+          _controller.value = _controller.value.copyWith(
+            text: state.data(),
+            selection: TextSelection.collapsed(
+                offset:
+                    state.data() != null ? (state.data() as String).length : 0),
+          );
 
           return TextField(
             obscureText: obscureText,
@@ -65,18 +77,23 @@ class EasyTextField extends StatelessWidget {
             textCapitalization: capitalization,
             enabled: (state.state() == TextStates.ready),
             onChanged: (text) {
+              entity = text;
               textBloc.add(Changed(text));
               onChangedAction?.call(text);
             },
             onSubmitted: (text) {
+              entity = text;
               textBloc.add(Submitted(text));
               onSubmittedAction?.call(text);
             },
-            onEditingComplete: () { //  ???
+            onEditingComplete: () {
+              //  ???
               debugPrint('Editing completed');
             },
             style: TextStyle(
-                color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),
+                color: state.state() == TextStates.disabled
+                    ? textColorDisabled
+                    : textColorEnabled),
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: textColorEnabled, width: 2.0),
@@ -92,9 +109,13 @@ class EasyTextField extends StatelessWidget {
               ),
               hintText: hintText,
               hintStyle: TextStyle(
-                  color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),
+                  color: state.state() == TextStates.disabled
+                      ? textColorDisabled
+                      : textColorEnabled),
               labelStyle: TextStyle(
-                  color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),
+                  color: state.state() == TextStates.disabled
+                      ? textColorDisabled
+                      : textColorEnabled),
             ),
           );
         },
@@ -113,20 +134,7 @@ class EasyTextField extends StatelessWidget {
   }
 
   bool isNotEmpty() {
-    bool enable = false;
-    bool notEmpty = false;
-    try {
-      enable = (textBloc.state.state() == TextStates.ready);
-      if (enable) {
-        String? result = textBloc.state.data();
-        if (result != null) {
-          notEmpty = result.isNotEmpty;
-        }
-      }
-    } catch (exception) {
-      debugPrint("******* isEnabled error: ${exception.toString()} *******");
-    }
-    return notEmpty;
+    return entity.isNotEmpty;
   }
 
   void enable() {
@@ -146,13 +154,6 @@ class EasyTextField extends StatelessWidget {
   }
 
   String? text() {
-    String? result;
-    try {
-      result = textBloc.state.data();
-    } catch (exception) {
-      debugPrint("******* disable error *******");
-    }
-    return result;
+    return entity;
   }
-
 }
