@@ -1,22 +1,10 @@
-# text_bloc
+# Event driven BLoC's text fields
 
-A new Flutter project.
+## Introduction
 
-## Getting Started
+The collection of buttons and switches (https://github.com/mk590901/Event-driven-BLoC-s-switch-widgets) is supplemented now with text fields created using __BLoC__ technology. So far there are only two of them: __MultilineTextField__ and __EasyTextField__. Both are based on the __TextField__ widget. Text input is accompanied by calls to callback functions, in which you can embed the logic of interaction between the widget and a group of other widgets. Combined with the buttons created earlier, this can make some tasks easier. The demo provides an example of filling out two fields: __account__ and __password__ with an indirect effect on the __login__ button: it becomes available for use if both fields aren't empty.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-
-## State Machine
+## TextBloc State Machine
 
 ![text_field](https://github.com/mk590901/text_bloc/assets/125393245/4bd199ae-e379-4d8d-865b-8ee5210f56c9)
 
