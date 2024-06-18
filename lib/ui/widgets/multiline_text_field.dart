@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/callback_fun_type.dart';
@@ -10,8 +12,9 @@ class MultilineTextField extends StatelessWidget {
   final FocusNode _focusNode = FocusNode();
 
   late TextBloc textBloc;
+  late Timer? timer;
 
-  final VoidCallbackParameter? callbackSubmitted;
+  final VoidCallbackParameter? onStartedAction;
   final VoidCallbackParameter? onChangedAction;
   final String initText;
   final String hintText;
@@ -20,9 +23,17 @@ class MultilineTextField extends StatelessWidget {
   final Color textColorEnabled;
   final TextCapitalization capitalization;
 
+  void startTimer(final String text) {
+    timer = Timer(const Duration(milliseconds: 100), () {
+      onStartedAction?.call(text);
+      timer?.cancel();
+      timer = null;
+    });
+  }
+
   MultilineTextField({super.key, this.initText = '', this.hintText = '', this.labelText = '',
     this.textColorEnabled = Colors.black, this.textColorDisabled = Colors.grey,
-    this.capitalization = TextCapitalization.none, this.callbackSubmitted, this.onChangedAction});
+    this.capitalization = TextCapitalization.none, this.onStartedAction, this.onChangedAction});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +43,7 @@ class MultilineTextField extends StatelessWidget {
         if (initText.isNotEmpty) {
           textBloc.add(Changed(initText));
         }
+        startTimer(initText);
         return textBloc;
       },
       child: BlocBuilder<TextBloc, TextState>(
@@ -50,13 +62,6 @@ class MultilineTextField extends StatelessWidget {
             onChanged: (text) {
               textBloc.add(Changed(text));
               onChangedAction?.call(text);
-            },
-            onSubmitted: (text) {
-              textBloc.add(Submitted(text));
-              callbackSubmitted?.call(text);
-            },
-            onEditingComplete: () { //  ???
-              debugPrint('Editing completed');
             },
             style: TextStyle(
                 color: state.state() == TextStates.disabled ? textColorDisabled : textColorEnabled),

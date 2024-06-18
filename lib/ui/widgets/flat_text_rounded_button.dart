@@ -106,7 +106,6 @@ class FlatTextRoundedButton extends StatelessWidget implements IClick {
     double? borderRadius_ = w_(borderRadius);
     double? borderWidth_ = w_(borderWidth);
     return BlocProvider<ButtonBloc>(
-      //create: (_) => SwitchAdvancedBloc(SwitchAdvancedState(SwitchAdvancedStates.off)),
       create: (_) {
         switchBloc = ButtonBloc(ButtonState(ButtonStates.ready));
         return switchBloc;

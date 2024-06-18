@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/callback_fun_type.dart';
@@ -10,7 +12,9 @@ class EasyTextField extends StatelessWidget {
   final FocusNode _focusNode = FocusNode();
 
   late TextBloc textBloc;
+  late Timer? timer;
 
+  final VoidCallbackParameter? onStartedAction;
   final VoidCallbackParameter? onSubmittedAction;
   final VoidCallbackParameter? onChangedAction;
   final VoidCallbackParameter? onCompletedAction;
@@ -22,11 +26,19 @@ class EasyTextField extends StatelessWidget {
   final TextCapitalization capitalization;
 
   //TextStyle defaultStyle = const TextStyle(fontFamily: 'Montserrat', fontSize: 18.0);
-  
+
+  void startTimer(final String text) {
+    timer = Timer(const Duration(milliseconds: 100), () {
+      onStartedAction?.call(text);
+      timer?.cancel();
+      timer = null;
+    });
+  }
+
   EasyTextField({super.key, this.initText = '', this.hintText = '',
     this.textColorEnabled = Colors.black, this.textColorDisabled = Colors.grey,
     this.capitalization = TextCapitalization.none, this.obscureText = false,
-    this.onSubmittedAction, this.onChangedAction, this.onCompletedAction});
+    this.onStartedAction, this.onSubmittedAction, this.onChangedAction, this.onCompletedAction});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +48,7 @@ class EasyTextField extends StatelessWidget {
         if (initText.isNotEmpty) {
           textBloc.add(Changed(initText));
         }
+        startTimer(initText);
         return textBloc;
       },
       child: BlocBuilder<TextBloc, TextState>(
@@ -97,6 +110,23 @@ class EasyTextField extends StatelessWidget {
       debugPrint("******* isEnabled error: ${exception.toString()} *******");
     }
     return enable;
+  }
+
+  bool isNotEmpty() {
+    bool enable = false;
+    bool notEmpty = false;
+    try {
+      enable = (textBloc.state.state() == TextStates.ready);
+      if (enable) {
+        String? result = textBloc.state.data();
+        if (result != null) {
+          notEmpty = result.isNotEmpty;
+        }
+      }
+    } catch (exception) {
+      debugPrint("******* isEnabled error: ${exception.toString()} *******");
+    }
+    return notEmpty;
   }
 
   void enable() {
