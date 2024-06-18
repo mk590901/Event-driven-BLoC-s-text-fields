@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ui/widgets/custom_text.dart';
+import 'ui/widgets/multiline_text_field.dart';
 import 'ui/widgets/flat_text_rounded_button.dart';
 
 void main() {
@@ -25,7 +25,7 @@ class TextFieldPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    CustomText text = CustomText(
+    MultilineTextField text = MultilineTextField(
         //initText: 'start',
         hintText: 'Enter your text here...',
         labelText: 'Text',

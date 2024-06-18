@@ -8,8 +8,8 @@ import '../states/button_state.dart';
 class ButtonBloc extends Bloc<Event, ButtonState> {
   BasicStateMachine? _stateMachine;
 
-  ButtonBloc(super.state) {
-    _stateMachine = ButtonStateMachine(ButtonState.state_(ButtonStates.ready));
+  ButtonBloc(ButtonState initialState) : super(initialState) {
+    _stateMachine = ButtonStateMachine(initialState.state().index);
     on<Reset>((event, emit) {
       done(event, emit);
     });

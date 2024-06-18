@@ -5,7 +5,7 @@ import '../../../ui/events/text_events.dart';
 import '../../../ui/blocs/text_bloc.dart';
 import '../../../ui/states/text_state.dart';
 
-class CustomText extends StatelessWidget {
+class MultilineTextField extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
@@ -20,7 +20,7 @@ class CustomText extends StatelessWidget {
   final Color textColorEnabled;
   final TextCapitalization capitalization;
 
-  CustomText({super.key, this.initText = '', this.hintText = '', this.labelText = '',
+  MultilineTextField({super.key, this.initText = '', this.hintText = '', this.labelText = '',
     this.textColorEnabled = Colors.black, this.textColorDisabled = Colors.grey,
     this.capitalization = TextCapitalization.none, this.callbackSubmitted, this.onChangedAction});
 

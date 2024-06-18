@@ -8,9 +8,7 @@ import '../states/text_state.dart';
 class TextBloc extends Bloc<Event, TextState> {
   BasicStateMachine? _stateMachine;
 
-  //TextBloc(super.state) {
   TextBloc(TextState initialState) : super(initialState) {
-    //_stateMachine = TextStateMachine(TextState.state_(TextStates.idle));
     _stateMachine = TextStateMachine(initialState.state().index);
 
     on<Submitted>((event, emit) {
