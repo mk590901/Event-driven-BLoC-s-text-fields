@@ -22,4 +22,6 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Movie
 
+https://github.com/mk590901/text_bloc/assets/125393245/a4c93540-f90b-4845-90d6-e05af8e77088
+
 
