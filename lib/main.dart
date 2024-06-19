@@ -87,6 +87,7 @@ class TextFieldPage extends StatelessWidget {
     );
 
     final EasyTextField password = EasyTextField(
+      align: TextAlign.end,
       hintText: 'Enter password...',
       obscureText: true,
       textColorEnabled: Colors.black,

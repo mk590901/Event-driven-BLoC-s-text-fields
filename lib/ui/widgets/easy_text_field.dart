@@ -25,6 +25,7 @@ class EasyTextField extends StatelessWidget {
   final Color textColorDisabled;
   final Color textColorEnabled;
   final TextCapitalization capitalization;
+  final TextAlign align;
 
   //TextStyle defaultStyle = const TextStyle(fontFamily: 'Montserrat', fontSize: 18.0);
 
@@ -38,6 +39,7 @@ class EasyTextField extends StatelessWidget {
 
   EasyTextField(
       {super.key,
+      this.align = TextAlign.start,
       this.initText = '',
       this.hintText = '',
       this.textColorEnabled = Colors.black,
@@ -71,6 +73,7 @@ class EasyTextField extends StatelessWidget {
           );
 
           return TextField(
+            textAlign: align,
             obscureText: obscureText,
             controller: _controller,
             focusNode: _focusNode,

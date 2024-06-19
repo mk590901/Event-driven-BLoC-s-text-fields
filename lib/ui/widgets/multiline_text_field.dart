@@ -23,6 +23,7 @@ class MultilineTextField extends StatelessWidget {
   final Color textColorDisabled;
   final Color textColorEnabled;
   final TextCapitalization capitalization;
+  final TextAlign align;
 
   void startTimer(final String text) {
     timer = Timer(const Duration(milliseconds: 100), () {
@@ -34,6 +35,7 @@ class MultilineTextField extends StatelessWidget {
 
   MultilineTextField(
       {super.key,
+      this.align = TextAlign.start,
       this.initText = '',
       this.hintText = '',
       this.labelText = '',
