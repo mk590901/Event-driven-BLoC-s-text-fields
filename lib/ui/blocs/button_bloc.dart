@@ -25,6 +25,9 @@ class ButtonBloc extends Bloc<Event, ButtonState> {
     on<Disable>((event, emit) {
       done(event, emit);
     });
+    on<ChangeText>((event, emit) {
+      done(event, emit);
+    });
   }
 
   void done(Event event, Emitter<ButtonState> emit) {

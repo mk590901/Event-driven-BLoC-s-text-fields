@@ -14,16 +14,18 @@ class ButtonStateMachine extends BasicStateMachine {
     states_[ButtonState.state_(ButtonStates.ready)] = State([
       Trans(Disable(),  ButtonState.state_(ButtonStates.disabled),  OnDisable()),
       Trans(Down(),     ButtonState.state_(ButtonStates.pressed),   OnPress()),
-      Trans(ChangeText(),   ButtonState.state_(ButtonStates.ready),     OnNothing())
+      Trans(ChangeText(),   ButtonState.state_(ButtonStates.ready), OnNothing())
     ]);
 
     states_[ButtonState.state_(ButtonStates.pressed)] = State([
       Trans(Reset(), ButtonState.state_(ButtonStates.ready), OnNothing()),
-      Trans(Up(), ButtonState.state_(ButtonStates.ready), OnUnpress())
+      Trans(Up(), ButtonState.state_(ButtonStates.ready), OnUnpress()),
+      Trans(ChangeText(),   ButtonState.state_(ButtonStates.pressed), OnNothing())
     ]);
 
     states_[ButtonState.state_(ButtonStates.disabled)] = State([
       Trans(Enable(), ButtonState.state_(ButtonStates.ready), OnEnable()),
+      Trans(ChangeText(),   ButtonState.state_(ButtonStates.disabled), OnNothing())
     ]);
   }
 
